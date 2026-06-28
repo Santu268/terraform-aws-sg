@@ -1,6 +1,6 @@
 resource "aws_security_group" "main" {
   count = length(var.sg_names)  
-  name        = replace("${local.common_name}-${var.sg_names[count.index]}-sg","_","-")
+  name        = "${local.common_name}-${var.sg_names[count.index]}-sg"
   description = "Allow ${var.project} project ${var.env} traffic for ${var.sg_names[count.index]}"
   vpc_id      = var.vpc_id
   egress {
@@ -12,7 +12,7 @@ resource "aws_security_group" "main" {
   tags = merge(
     local.common_tags,
     {
-        Name = "${local.common_name}-${var.sg_names[count.index]}-sg"
+        Name = replace("${local.common_name}-${var.sg_names[count.index]}-sg","_","-")
     }
   )
 }
